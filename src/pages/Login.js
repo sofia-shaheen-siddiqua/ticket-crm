@@ -36,8 +36,8 @@ function Login() {
 
 
         sendSignupData(data).then((response) => {
-            if (response.status === 200) {
-                window.location.href('/');
+            if (response.status === 201) {
+                window.location.href = '/';
             }
         }).catch(error => {
             if (error.status === 400) {
@@ -52,26 +52,30 @@ function Login() {
     const handleLogin = (e) => {
         e.preventDefault(e);
         const data = {
-            name: userData.userName,
+            userId: userData.userId,
             password: userData.password
         }
 
         sendLoginData(data).then(response => {
+            console.log(response.data)
             if (response.status === 200) {
                 localStorage.setItem('name', response.data.name)
-                localStorage.setItem('userType', response.data.userType)
-                localStorage.setItem('token', response.data.token)
+                localStorage.setItem('userType', response.data.userTypes)
+                localStorage.setItem('token', response.data.accessToken)
                 localStorage.setItem('userId', response.data.userId)
                 localStorage.setItem('email', response.data.email)
+                localStorage.setItem('userStatus', response.data.userStatus)
             }
-            if (response.data.userType === 'CUSTOMER') {
-                window.location.href('/customer')
+            if (response.data.userTypes === 'CUSTOMER') {
+                window.location.href = '/customer'
             }
-            else if (response.data.userType === 'ADMIN') {
-                window.location.href('/admin')
+            else if (response.data.userTypes === 'ADMIN') {
+                window.location.href = '/admin'
+                // window.location.href = 'http://www.google.com'
             }
             else {
-                window.location.href('/engineer')
+                window.location.href = '/engineer'
+                // window.location.href = 'http://www.google.com'
             }
 
         })
