@@ -3,13 +3,16 @@ import { useState } from 'react';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 import { sendSignupData } from '../api/auth';
 import { sendLoginData } from '../api/auth';
+import { useNavigate } from 'react-router-dom';
+
 
 
 function Login() {
     const [showSignup, setShowSignup] = useState(false);
     const [userType, setuserType] = useState('CUSTOMER');
-    const [userData, setuserData] = useState({})
-    const [errorMsg, seterrorMsg] = useState('')
+    const [userData, setuserData] = useState({});
+    const [errorMsg, seterrorMsg] = useState('');
+    const navigate = useNavigate();
 
     const toggle = () => {
         setShowSignup(!showSignup)
@@ -37,7 +40,7 @@ function Login() {
 
         sendSignupData(data).then((response) => {
             if (response.status === 201) {
-                window.location.href = '/';
+                navigate('/');
             }
         }).catch(error => {
             if (error.status === 400) {
@@ -67,15 +70,13 @@ function Login() {
                 localStorage.setItem('userStatus', response.data.userStatus)
             }
             if (response.data.userTypes === 'CUSTOMER') {
-                window.location.href = '/customer'
+                navigate('/customer')
             }
             else if (response.data.userTypes === 'ADMIN') {
-                window.location.href = '/admin'
-                // window.location.href = 'http://www.google.com'
+                navigate('/admin');
             }
             else {
-                window.location.href = '/engineer'
-                // window.location.href = 'http://www.google.com'
+                navigate('/engineer')
             }
 
         })
