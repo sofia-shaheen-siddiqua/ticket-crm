@@ -7,6 +7,8 @@ import Admin from './pages/Admin';
 import Customer from './pages/Customer';
 import Engineer from './pages/Engineer';
 import RequiredAuth from './components/RequiredAuth';
+import NotFound from './components/NotFound';
+import Unauthorised from './components/Unauthorised';
 import './App.css';
 
 const roles = {
@@ -35,6 +37,9 @@ function App() {
         <Route element={<RequiredAuth role={roles.ENGINEER} />}>
           <Route path='/engineer' element={<Engineer />} />
         </Route>
+
+        <Route path='/unauthorised' element={<Unauthorised />} ></Route>
+        <Route path='/*' element={<NotFound />} ></Route>
 
       </Routes>
     </Router>
